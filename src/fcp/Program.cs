@@ -26,9 +26,12 @@ namespace fcp
 
                 switch (args[i])
                 {
+                    case "-t":
+                        TestMode();
+                        break;
                     case "-i":
-                        IP = args[i+1];
-                    break;
+                        IP = args[i + 1];
+                        break;
                     case "-p":
                         port = Convert.ToInt32(args[i + 1]);
                         i++;
@@ -48,5 +51,14 @@ namespace fcp
             }
         }
 
+        private static void TestMode()
+        {
+            Console.WriteLine("Instancia de Testes.");
+            var x = new FileInfo(@"C:\Users\ulc\Source\myRepos\CopyFilesStream\src\fcp\bin\Debug\Resource\teste.json");
+            List<FileInfo> ArquivosList = new List<FileInfo>();
+            ArquivosList.Add(x);
+            Machine.Sender(port, ArquivosList, "");
+            Machine.Receiver(port);
+        }
     }
 }
