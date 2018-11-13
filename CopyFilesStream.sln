@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{78D31F9C-FBC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CopyFilesStream", "src\CopyFilesStream\CopyFilesStream.csproj", "{E431967B-0152-4C60-8F64-E12328EE9DE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fcp", "src\fcp\fcp.csproj", "{44EE2645-8EC6-4F53-9EA3-2FC9A2B0EA29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,8 +34,21 @@ Global
 		{E431967B-0152-4C60-8F64-E12328EE9DE2}.Release|x64.Build.0 = Release|Any CPU
 		{E431967B-0152-4C60-8F64-E12328EE9DE2}.Release|x86.ActiveCfg = Release|Any CPU
 		{E431967B-0152-4C60-8F64-E12328EE9DE2}.Release|x86.Build.0 = Release|Any CPU
+		{44EE2645-8EC6-4F53-9EA3-2FC9A2B0EA29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44EE2645-8EC6-4F53-9EA3-2FC9A2B0EA29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44EE2645-8EC6-4F53-9EA3-2FC9A2B0EA29}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{44EE2645-8EC6-4F53-9EA3-2FC9A2B0EA29}.Debug|x64.Build.0 = Debug|Any CPU
+		{44EE2645-8EC6-4F53-9EA3-2FC9A2B0EA29}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{44EE2645-8EC6-4F53-9EA3-2FC9A2B0EA29}.Debug|x86.Build.0 = Debug|Any CPU
+		{44EE2645-8EC6-4F53-9EA3-2FC9A2B0EA29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44EE2645-8EC6-4F53-9EA3-2FC9A2B0EA29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44EE2645-8EC6-4F53-9EA3-2FC9A2B0EA29}.Release|x64.ActiveCfg = Release|Any CPU
+		{44EE2645-8EC6-4F53-9EA3-2FC9A2B0EA29}.Release|x64.Build.0 = Release|Any CPU
+		{44EE2645-8EC6-4F53-9EA3-2FC9A2B0EA29}.Release|x86.ActiveCfg = Release|Any CPU
+		{44EE2645-8EC6-4F53-9EA3-2FC9A2B0EA29}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E431967B-0152-4C60-8F64-E12328EE9DE2} = {78D31F9C-FBC4-47A7-AF68-C78728E552F0}
+		{44EE2645-8EC6-4F53-9EA3-2FC9A2B0EA29} = {78D31F9C-FBC4-47A7-AF68-C78728E552F0}
 	EndGlobalSection
 EndGlobal
