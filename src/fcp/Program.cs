@@ -57,8 +57,8 @@ namespace fcp
             var x = new FileInfo(@"C:\Users\ulc\Source\myRepos\CopyFilesStream\src\fcp\bin\Debug\Resource\teste.json");
             List<FileInfo> ArquivosList = new List<FileInfo>();
             ArquivosList.Add(x);
-            Machine.Sender(port, ArquivosList, "");
             Machine.Receiver(port);
+            Machine.Sender(port, ArquivosList, "");
         }
     }
 }
