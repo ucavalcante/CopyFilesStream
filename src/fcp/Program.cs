@@ -7,6 +7,7 @@ namespace fcp
     class Program
     {
         private static int port = 1983;
+        private static string IP = "";
         static void Main(string[] args)
         {
             CommandDriver(args);
@@ -25,6 +26,9 @@ namespace fcp
 
                 switch (args[i])
                 {
+                    case "-i":
+                        IP = args[i+1];
+                    break;
                     case "-p":
                         port = Convert.ToInt32(args[i + 1]);
                         i++;
@@ -36,11 +40,11 @@ namespace fcp
             }
             if (ArquivosList.Count > 0)
             {
-                
+                Machine.Sender(port, ArquivosList, IP);
             }
             else
             {
-                
+                Machine.Receiver(port);
             }
         }
 
