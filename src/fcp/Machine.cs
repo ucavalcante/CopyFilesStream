@@ -4,8 +4,10 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using fcp.Models;
 using Ncel;
-
+using Newtonsoft;
+using Newtonsoft.Json;
 
 namespace fcp
 {
@@ -20,7 +22,15 @@ namespace fcp
                 try
                 {
                     FileManager fileReader = new FileManager();
-                    string sendingMessage = fileReader.Reader(arquivo);
+                    Block block = new Block{
+                        CurrentBlock = 1,
+                        TotalBlocks = 1,
+                        Message = fileReader.Reader(arquivo),
+                        BlockStatus = Status.Started,
+                        FileData = arquivo.Name,
+
+                    };
+                    string sendingMessage = JsonConvert.SerializeObject(block,Formatting.None);
                     Byte[] sendBytes = Encoding.ASCII.GetBytes(sendingMessage);
                     networkStream.Write(sendBytes, 0, sendBytes.Length);
                     networkStream.Flush();
@@ -69,7 +79,8 @@ namespace fcp
                                 Console.WriteLine($"Recebido:{data}");
                                 Log.Information($"Recebido:{data}");
                                 FileManager fileManager = new FileManager();
-                                fileManager.Writer(data);
+                                var block = JsonConvert.DeserializeObject<Block>(data);
+                                fileManager.Writer(block.Message,block.FileData);
                                 i = stream.Read(bytes, 0, bytes.Length);
                             }
                         }
