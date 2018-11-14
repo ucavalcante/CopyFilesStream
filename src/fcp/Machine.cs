@@ -16,25 +16,21 @@ namespace fcp
             var tcpClient = new TcpClient(ip, port);
             foreach (var arquivo in arquivosList)
             {
-                
+                NetworkStream networkStream = tcpClient.GetStream();
                 try
                 {
-                    NetworkStream networkStream = tcpClient.GetStream();
-                    
-                    string serverResponse = "Teste";
-                    Byte[] sendBytes = Encoding.ASCII.GetBytes(serverResponse);
+                    string sendingMessage = "Teste";
+                    Byte[] sendBytes = Encoding.ASCII.GetBytes(sendingMessage);
                     networkStream.Write(sendBytes, 0, sendBytes.Length);
                     networkStream.Flush();
-                    
-                    networkStream.Close();
-                    Console.WriteLine($"Recebido:{serverResponse}");
-                    Log.Information($"Recebido:{serverResponse}");
-
                 }
-                catch (System.Exception)
+                catch (System.Exception ex)
                 {
-
-                    throw;
+                    Log.Information(ex.Message);
+                }
+                finally
+                {
+                    networkStream.Close();
                 }
             }
 
@@ -42,8 +38,8 @@ namespace fcp
         public static void Receiver(int port)
         {
             IPAddress address = IPAddress.Parse("0.0.0.0");
-            
-            var server = new TcpListener( address, port);
+
+            var server = new TcpListener(address, port);
             while (true)
             {
                 try
@@ -59,39 +55,37 @@ namespace fcp
                         var client = server.AcceptTcpClient();
                         Console.WriteLine("Conexão estabelecida.");
                         Log.Information("Conexão estabelecida.");
-
-                        NetworkStream stream = client.GetStream();
-
-                        int i;
-
-                        i = stream.Read(bytes, 0, bytes.Length);
-                        while (i != 0)
+                        try
                         {
-                            data = Encoding.ASCII.GetString(bytes, 0, i);
-                            Console.WriteLine($"Recebido:{data}");
-                            Log.Information($"Recebido:{data}");
+                            NetworkStream stream = client.GetStream();
 
-                            data = data.ToUpper();
+                            int i;
 
-                            byte[] msg = Encoding.ASCII.GetBytes(data);
-
-                            stream.Write(msg, 0, msg.Length);
-                            Console.WriteLine($"Enviado:{data}");
-
-                             i = stream.Read(bytes, 0, bytes.Length);
-
+                            i = stream.Read(bytes, 0, bytes.Length);
+                            while (i != 0)
+                            {
+                                data = Encoding.ASCII.GetString(bytes, 0, i);
+                                Console.WriteLine($"Recebido:{data}");
+                                Log.Information($"Recebido:{data}");
+                                i = stream.Read(bytes, 0, bytes.Length);
+                            }
                         }
-                        client.Close();
+                        catch (System.Exception ex)
+                        {
+                            Log.Information(ex.Message);
+                        }
+                        finally
+                        {
+                            client.Close();
+                        }
                     }
                 }
                 catch (SocketException ex)
                 {
-                    Console.WriteLine(ex.Message);
                     Log.Information(ex.Message);
                 }
                 catch (System.Exception ex)
                 {
-                    Console.WriteLine($"Exceção não esperada:{ex.Message}");
                     Log.Information($"Exceção não esperada:{ex.Message}");
                 }
             }
