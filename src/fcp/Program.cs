@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace fcp
 {
@@ -28,9 +29,10 @@ namespace fcp
                 {
                     case "-t":
                         TestMode();
-                        break;
+                        return;
                     case "-i":
                         IP = args[i + 1];
+                        i++;
                         break;
                     case "-p":
                         port = Convert.ToInt32(args[i + 1]);
@@ -57,8 +59,14 @@ namespace fcp
             var x = new FileInfo(@"C:\Users\ulc\Source\myRepos\CopyFilesStream\src\fcp\bin\Debug\Resource\teste.json");
             List<FileInfo> ArquivosList = new List<FileInfo>();
             ArquivosList.Add(x);
+            Thread thread = new Thread(new ThreadStart(ParalelalRunner));
+            thread.Start();
+
+            Machine.Sender(port, ArquivosList, IP);
+        }
+        private static void ParalelalRunner()
+        {
             Machine.Receiver(port);
-            Machine.Sender(port, ArquivosList, "");
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using Ncel;
@@ -10,21 +11,22 @@ namespace fcp
 {
     public class Machine
     {
-        public static void Sender(int port, List<FileInfo> arquivosList, string iP)
+        public static void Sender(int port, List<FileInfo> arquivosList, string ip)
         {
-            var _TcpClient = new TcpClient();
+            var tcpClient = new TcpClient(ip, port);
             foreach (var arquivo in arquivosList)
             {
-                MemoryStream dataCopy = new MemoryStream();
+                
                 try
                 {
-                    NetworkStream networkStream = _TcpClient.GetStream();
-                    string reply = null;
-                    string serverResponse = reply;
+                    NetworkStream networkStream = tcpClient.GetStream();
+                    
+                    string serverResponse = "Teste";
                     Byte[] sendBytes = Encoding.ASCII.GetBytes(serverResponse);
                     networkStream.Write(sendBytes, 0, sendBytes.Length);
                     networkStream.Flush();
                     
+                    networkStream.Close();
                     Console.WriteLine($"Recebido:{serverResponse}");
                     Log.Information($"Recebido:{serverResponse}");
 
@@ -39,7 +41,9 @@ namespace fcp
         }
         public static void Receiver(int port)
         {
-            var server = new TcpListener(port);
+            IPAddress address = IPAddress.Parse("0.0.0.0");
+            
+            var server = new TcpListener( address, port);
             while (true)
             {
                 try
@@ -74,7 +78,7 @@ namespace fcp
                             stream.Write(msg, 0, msg.Length);
                             Console.WriteLine($"Enviado:{data}");
 
-                            i = stream.Read(bytes, 0, bytes.Length);
+                             i = stream.Read(bytes, 0, bytes.Length);
 
                         }
                         client.Close();
