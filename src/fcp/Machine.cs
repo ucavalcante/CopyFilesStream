@@ -19,7 +19,8 @@ namespace fcp
                 NetworkStream networkStream = tcpClient.GetStream();
                 try
                 {
-                    string sendingMessage = "Teste";
+                    FileManager fileReader = new FileManager();
+                    string sendingMessage = fileReader.Reader(arquivo);
                     Byte[] sendBytes = Encoding.ASCII.GetBytes(sendingMessage);
                     networkStream.Write(sendBytes, 0, sendBytes.Length);
                     networkStream.Flush();
@@ -67,6 +68,8 @@ namespace fcp
                                 data = Encoding.ASCII.GetString(bytes, 0, i);
                                 Console.WriteLine($"Recebido:{data}");
                                 Log.Information($"Recebido:{data}");
+                                FileManager fileManager = new FileManager();
+                                fileManager.Writer(data);
                                 i = stream.Read(bytes, 0, bytes.Length);
                             }
                         }
